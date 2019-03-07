@@ -2,13 +2,13 @@
 
 public class RagdollTrigger : MonoBehaviour {
 
-	new Collider collider;
-	new Rigidbody rigidbody;
+	Collider col;
+	Rigidbody rb;
 
 	void Awake()
 	{
-		collider = GetComponent<Collider>();
-		rigidbody = GetComponent<Rigidbody>();
+		col = GetComponent<Collider>();
+		rb = GetComponent<Rigidbody>();
 	}
 
 	void Update()
@@ -23,9 +23,9 @@ public class RagdollTrigger : MonoBehaviour {
 		{
 			//Trigger ragdoll and turn it back into a normal collider
 			ragdoll.RagdollOn = true;
-			collider.isTrigger = false;
-			rigidbody.mass = 100f;
-			rigidbody.AddForce(Vector3.back * 100000f);
+			this.col.isTrigger = false;
+			rb.mass = 100f;
+			rb.AddForce(Vector3.back * 100000f);
 		}
 			
 	}
@@ -33,6 +33,6 @@ public class RagdollTrigger : MonoBehaviour {
 	public void Trigger()
 	{
 		//Let go of wrecking ball!
-		rigidbody.isKinematic = !rigidbody.isKinematic;
+		rb.isKinematic = !rb.isKinematic;
 	}
 }
