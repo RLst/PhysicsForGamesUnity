@@ -13,11 +13,7 @@ public class RagdollTrigger : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.anyKeyDown)
-		{
-			//Let go of wrecking ball!
-			rigidbody.isKinematic = !rigidbody.isKinematic;
-		}
+
 	}
 
 	void OnTriggerEnter(Collider col)
@@ -32,5 +28,11 @@ public class RagdollTrigger : MonoBehaviour {
 			rigidbody.AddForce(Vector3.back * 100000f);
 		}
 			
+	}
+
+	public void Trigger()
+	{
+		//Let go of wrecking ball!
+		rigidbody.isKinematic = !rigidbody.isKinematic;
 	}
 }

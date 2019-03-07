@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_Scenes/Main.unity
+    guid: aca3736a888537141b2b5682e02bde1a
+  - enabled: 1
+    path: Assets/_Scenes/01 Rigidbody Dynamics.unity
+    guid: 3293e107c840a0b4380896cdef6ee3ef
+  - enabled: 1
+    path: Assets/_Scenes/02 Ragdoll Physics, Triggers and Joints.unity
+    guid: 42e253d43550b2c46b71ba683cbd4032
+  - enabled: 1
+    path: Assets/_Scenes/03 Kinematics, Player Controller and Raycasts.unity
+    guid: c95e3a07fbc1bac4d868b4a0e37fb950
   m_configObjects: {}

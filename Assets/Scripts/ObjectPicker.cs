@@ -8,7 +8,7 @@ public class ObjectPicker : MonoBehaviour
 
     [SerializeField] Camera cam;
     [SerializeField] Transform obstacles;
-    [SerializeField] float mousePickupSpeed = 1f;
+    [SerializeField] float force = 1f;
     [SerializeField] Material selectedMaterial;
     [SerializeField] Material unselectedMaterial;
 
@@ -34,7 +34,7 @@ public class ObjectPicker : MonoBehaviour
     void Update()
     {
         SelectObjects();
-        LiftObjects();
+        MoveObjects();
         ColorObjects();
         DebugTest();
     }
@@ -61,15 +61,19 @@ public class ObjectPicker : MonoBehaviour
             {
                 Transform objectHit = hit.transform;
 
-                //If object hit is valid (ie. on the list of pickable objects)
+                //If object found is valid (ie. on the list of pickable objects)
                 if (pickableObjects.Contains(objectHit))
                 {
-                    //ADD to selected if any shift keys are pressed
-                    if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+                    if (!selectedObjects.Contains(objectHit))
                     {
-                        selectedObjects.Clear();
+                        //ADD to selected if any shift keys are pressed
+                        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+                        {
+                            selectedObjects.Clear();
+                        }
+                        selectedObjects.Add(objectHit);
                     }
-                    selectedObjects.Add(objectHit);
+                    //Do nothing if object is already selected
                 }
             }
         }
@@ -77,7 +81,7 @@ public class ObjectPicker : MonoBehaviour
 
     }
 
-    private void LiftObjects()
+    private void MoveObjects()
     {
         //Lift selected objects based on mouse vertical input * lift speed
         if (Input.GetMouseButton(0))
@@ -85,9 +89,13 @@ public class ObjectPicker : MonoBehaviour
             foreach (var obj in selectedObjects)
             {
                 obj.GetComponent<Rigidbody>().useGravity = false;                //Turn off gravity before moving
-                obj.Translate(Vector3.forward * mousePickupSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime, cam.transform);
-                obj.Translate(Vector3.up * mousePickupSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime, Space.World);
-                obj.Translate(Vector3.right * mousePickupSpeed * Input.GetAxis("Mouse X") * Time.deltaTime, cam.transform);
+                var rb = obj.GetComponent<Rigidbody>();
+                rb.AddForce(cam.transform.forward * force * Input.GetAxis("Mouse Y") * Time.deltaTime);
+                rb.AddForce(transform.up * force * Input.GetAxis("Mouse Y") * 0.5f * Time.deltaTime);
+                rb.AddForce(cam.transform.right * force * Input.GetAxis("Mouse X") * Time.deltaTime);
+                // obj.Translate(Vector3.forward * mousePickupSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime, cam.transform);
+                // obj.Translate(Vector3.up * mousePickupSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime, Space.World);
+                // obj.Translate(Vector3.right * mousePickupSpeed * Input.GetAxis("Mouse X") * Time.deltaTime, cam.transform);
             }
         }
         else

@@ -5,7 +5,7 @@ public class CannonBall : MonoBehaviour {
 	public float forceOnFire = 300;
 	
 	bool fire = false;
-	bool canFire = true;
+	// bool canFire = true;
 
 	Rigidbody rb = null;
 
@@ -15,13 +15,15 @@ public class CannonBall : MonoBehaviour {
 		rb.isKinematic = true;
 	}
 
-	void Update()
-	{
-		if (Input.anyKeyDown && canFire)
-		{
-			rb.isKinematic = false;
-			rb.AddForce(transform.forward * forceOnFire);
-			// canFire = false;
-		}
-	}
+	// void Update()
+    // {
+    //     FireCannonball();
+    // }
+
+    public void FireCannonball()
+    {
+		rb.isKinematic = false;
+		rb.AddForce(transform.forward * forceOnFire);
+		// canFire = false;
+    }
 }
